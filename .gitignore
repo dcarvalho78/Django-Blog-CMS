@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+.env
+npm-debug.log
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# Allgemein
+.DS_Store
+*.log
+/dist
