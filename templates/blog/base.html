@@ -1,0 +1,9 @@
+{% load blog_tags %}
+{% include "blog/includes/header.html" %}
+
+
+  <main class="flex-shrink-0">
+        {% block content %}
+        {% endblock %}
+    </main>
+{% include "blog/includes/footer.html" %}

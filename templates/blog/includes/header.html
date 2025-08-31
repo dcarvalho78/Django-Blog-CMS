@@ -1,0 +1,414 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>{% block title %}{% endblock %}</title>
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+     
+
+      <link href={% static 'css/styles.css' %} rel="stylesheet">
+      
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+body {
+     font-family: "Roboto", sans-serif;
+}
+ h1,h2,h3,h4,h5,h6 {
+     font-family: "Roboto", sans-serif;
+	 font-weight:800;
+}
+/* Brand Badge / Logo */
+.brand-badge{
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, #6c63ff 100%);
+  color: #fff;
+}
+
+/* Falls nötig: Overlay gleichmäßig verteilen */
+.card-img-overlay{
+  gap: .5rem; /* sorgt für etwas Luft zwischen Badge, Body und Footer-Zeile */
+}
+/* Glas-Effekt + Shadow */
+.navbar-glass{
+  backdrop-filter: saturate(180%) blur(8px);
+  background: rgba(255,255,255,0.9) !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+/* Brand-Badge fein abstimmen */
+.brand-badge{
+  width: 40px; height: 40px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, #6c63ff 100%);
+  color: #fff;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.navbar-brand:hover .brand-badge{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+
+/* Nav-Links – Hover/Active */
+.navbar-nav .nav-link{
+  padding: .5rem .75rem; border-radius: .5rem;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.navbar-nav .nav-link:hover{ background: rgba(0,0,0,0.04); transform: translateY(-1px); }
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link[aria-current="page"]{
+  color: var(--primary); background: rgba(242,125,114,.12);
+}
+
+/* Dropdown */
+.dropdown-menu{ border-radius: .75rem; overflow: hidden; }
+.dropdown-item{ padding: .6rem 1rem; }
+.dropdown-item:hover{ background: rgba(0,0,0,0.05); }
+
+/* Suche (Desktop) */
+.nav-search{ border: 1px solid rgba(0,0,0,.08); border-radius: 999px; padding-inline: .35rem; background: #fff; }
+.nav-search .form-control{ box-shadow: none; }
+.nav-search .form-control:focus{ box-shadow: none; }
+.nav-search .input-group-text{ color: #6c757d; }
+
+/* Toggler ohne Randglanz */
+.navbar-toggler{ border: 0; }
+.navbar-toggler:focus{ box-shadow: none; }
+
+/*Farben*/
+ :root {
+     --primary: #F27D72;
+}
+ .small {
+     font-size: 0.7rem;
+}
+ .gradient-1 {
+     background: linear-gradient(63deg,rgba(30, 42, 56, 1) 0%, rgba(242, 125, 114, 0.56) 100%);
+}
+ .gradient-2 {
+     background: linear-gradient(63deg,rgba(30, 42, 56, 1) 0%, rgba(0, 200, 200, 0.56) 100%);
+}
+ .gradient-3 {
+     background: linear-gradient(63deg,rgba(20, 56, 97, 1) 0%, rgba(56, 50, 50, 0.31) 100%);
+}
+ .gradient-4 {
+     background: linear-gradient(90deg,rgba(242, 125, 114, 0.6) 30%, rgba(74, 144, 226, 0.56) 100%);
+}
+.overlay {
+     rgba(0, 0, 0, 0,8);
+}
+ #img1 {
+     filter: hue-rotate(200deg);
+}
+/* Tags dropdown container */
+.dropdown-menu-tags{
+  max-width: 520px;          /* let badges wrap into rows */
+  max-height: 40vh;          /* scroll if many tags */
+  overflow: auto;
+  border-radius: .75rem;
+}
+
+/* Mega menu layout */
+@media (min-width: 992px){
+  .dropdown-mega { position: static; } /* allow full-width dropdown inside navbar */
+  .dropdown-mega .dropdown-menu.mega-menu{
+    left: 0; right: 0; width: 100%;
+    border-radius: 0 0 1rem 1rem;
+    margin-top: 0;
+  }
+}
+
+/* Tag badges look + hover */
+.tag-badge{
+  background: rgba(242,125,114,.12);        /* uses --primary vibe */
+  color: var(--primary);
+  border: 1px solid rgba(242,125,114,.30);
+  padding: .45rem .7rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.tag-badge:hover{
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Scroll if there are tons of tags (mobile & small screens) */
+.mega-menu{
+  max-height: 70vh;
+  overflow: auto;
+}
+
+ .card {
+     overflow: hidden;
+}
+
+ .card-img {
+     height:300px;
+     object-fit:cover;
+}
+ .card-img-overlay {
+     /*background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);*/
+     display: flex;
+     flex-direction: column;
+}
+ .author-icon {
+     width: 32px;
+     height: 32px;
+     border-radius: 50%;
+     background: linear-gradient(135deg, #6f42c1 0%, #0dcaf0 100%);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: white;
+     font-weight: bold;
+     margin-right: 0.8rem;
+}
+ .navbar .dropdown-menu {
+     right: 0;
+     left: auto;
+     transform: translateX(0) !important;
+}
+ .search-container {
+     min-width: 300px;
+     width: 100%;
+     padding: 5px;
+}
+ .search-box {
+     position: relative;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     border-radius: 5px;
+     overflow: hidden;
+}
+ .search-input {
+     padding-left: 45px;
+     padding-right: 50px;
+     height: 50px;
+     border: none;
+     border-radius: 50px;
+}
+ .search-input:focus {
+     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+ .search-icon {
+     position: absolute;
+     left: 15px;
+     top: 50%;
+     transform: translateY(-50%);
+     color: #6c757d;
+     z-index: 5;
+}
+ .search-btn {
+     position: absolute;
+     right: 5px;
+     top: 5px;
+     height: 40px;
+     width: 40px;
+     border: none;
+     background: transparent;
+     cursor: pointer;
+     z-index: 5;
+}
+ .navbar .dropdown-menu {
+     right: 0;
+     left: auto;
+     transform: translateX(0) !important;
+}
+/*.navbar .dropdown {
+     position: static;
+}
+ .navbar .dropdown-menu[data-bs-popper] {
+     left: 0;
+     right: auto;
+     margin-left: var(--bs-dropdown-spacer);
+     margin-top: var(--bs-dropdown-spacer);
+}
+ @media (min-width: 992px) {
+     .navbar .dropdown-menu {
+         position: absolute;
+         left: 50%;
+         transform: translateX(-50%);
+    }
+     .navbar .container {
+         position: relative;
+    }
+}
+ */
+ .search-result-item {
+     transition: transform 0.2s;
+     border-left: 3px solid transparent;
+}
+ .search-result-item:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+     border-left: 3px solid #0d6efd;
+}
+ .result-category {
+     font-size: 0.85rem;
+}
+ .search-info {
+     background-color: #f8f9fa;
+     border-radius: 8px;
+}
+ .pagination {
+     margin-bottom: 0;
+}
+/* Footer Styling */
+.footer { position: relative; }
+.footer-link { color: #cfd8dc; text-decoration: none; }
+.footer-link:hover { color: #fff; text-decoration: none; }
+.footer .input-group .form-control::placeholder { color: #95a1ab; }
+
+/* Subtile Top-Glow in Footer */
+.footer::before{
+  content:""; position: absolute; left:0; right:0; top:0; height:3px;
+  background: linear-gradient(90deg, var(--primary), #6c63ff);
+  opacity:.6;
+}
+
+/* Back-to-top Button */
+.back-to-top{
+  position: fixed; right: 16px; bottom: 16px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+}
+.back-to-top:hover{ transform: translateY(-2px); }
+
+</style>
+   </head>
+   <body class="d-flex flex-column h-100">
+      <main class="flex-shrink-0">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top navbar-glass">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+      <span class="brand-badge shadow-sm"><i class="bi bi-pen-fill"></i></span>
+      <span class="fw-bold">CityBlog</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog:post_list' %}">
+            <i class="bi bi-journal-text me-1"></i>Blog
+          </a>
+        </li>
+
+        {% if categories %}
+        <!-- Kategorien-Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navCats" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-grid-3x3-gap me-1"></i>Categories
+          </a>
+          <ul class="dropdown-menu shadow-sm" aria-labelledby="navCats">
+            {% for category in categories %}
+              <li><a class="dropdown-item" href="{% url 'blog:category_list' category.id %}">{{ category.name }}</a></li>
+            {% empty %}
+              <li><span class="dropdown-item-text text-muted">No categories yet</span></li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item dropdown dropdown-mega">
+  <a class="nav-link dropdown-toggle" href="#" id="navTags" role="button"
+     data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="bi bi-tags me-1"></i>Tags
+  </a>
+
+  <!-- Full-width mega menu -->
+  <div class="dropdown-menu mega-menu p-0 border-0 shadow" aria-labelledby="navTags">
+    <div class="container py-4">
+      <div class="row g-4">
+        <!-- Left: filter + tag badges -->
+        <div class="col-12 col-lg-9">
+          <!-- Filter (optional) -->
+          <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text border-0 bg-secondary bg-opacity-10 text-secondary">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="tagFilter" class="form-control border-0 bg-secondary bg-opacity-10"
+                   placeholder="Filter tags…">
+          </div>
+
+          <!-- Badges grid -->
+          <div id="tagList" class="d-flex flex-wrap gap-2">
+            {% if tags %}
+              {% for tag in tags %}
+                <a class="badge rounded-pill tag-badge"
+                   data-name="{{ tag.name|lower }}"
+                   href="{% url 'blog:post_list_by_tag' tag.slug %}">
+                   {{ tag.name }}
+                </a>
+              {% endfor %}
+            {% else %}
+              <span class="text-muted small">No tags yet</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Right: quick links (optional) -->
+        <div class="col-12 col-lg-3">
+          <h6 class="text-uppercase text-secondary small mb-2">Quick links</h6>
+          <ul class="list-unstyled lh-lg mb-0">
+            <li><a class="text-decoration-none" href="{% url 'blog:post_list' %}">All posts</a></li>
+            {% if categories %}
+            <li><a class="text-decoration-none" href="{% url 'blog:category_list' categories.0.id %}">
+              Latest in {{ categories.0.name }}</a></li>
+            {% endif %}
+            <li><a class="text-decoration-none" href="{% url 'blog:post_search' %}?query=">Search posts</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+        {% endif %}
+      </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav ms-auto align-items-center">
+        <!-- Desktop-Suche -->
+        <li class="nav-item d-none d-lg-block">
+          <form class="d-flex" method="get" action="{% url 'blog:post_search' %}">
+            <div class="input-group input-group-sm nav-search">
+              <span class="input-group-text border-0 bg-transparent"><i class="bi bi-search"></i></span>
+              <input class="form-control border-0" type="search" name="query" placeholder="Search..." aria-label="Search">
+            </div>
+          </form>
+        </li>
+
+        <!-- Mobile-Suche als Dropdown -->
+        <li class="nav-item dropdown d-lg-none">
+          <a class="nav-link" href="#" id="navSearch" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-search"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end p-3" aria-labelledby="navSearch" style="min-width: 280px;">
+            <form class="d-flex" method="get" action="{% url 'blog:post_search' %}">
+              <input class="form-control" type="search" name="query" placeholder="Search..." aria-label="Search">
+              <button class="btn btn-primary ms-2" type="submit">Go</button>
+            </form>
+          </div>
+        </li>
+
+        <li class="nav-item ms-lg-2">
+          <a class="nav-link" href="/blog/feed/" title="RSS"><i class="bi bi-rss"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
