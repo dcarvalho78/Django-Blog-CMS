@@ -1,0 +1,115 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+{% if query %}
+  <!-- Search Results Section -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8 mx-auto">
+    
+          <div class="search-info p-3 mb-4">
+            <p class="mb-0">
+              {% with results.count as total_results %}
+                Found {{ total_results }} result{{ total_results|pluralize }}
+              {% endwith %} for <strong>"{{ query }}"</strong>
+            </p>
+          </div>
+          
+    
+          <div class="search-results">
+            {% for post in results %}
+    
+            <div class="card search-result-item mb-4">
+              <div class="card-body">
+                <span class="badge bg-primary result-category mb-2">
+                  {% if post.category %}{{ post.category.name }}{% else %}Post{% endif %}
+                </span>
+                <h5 class="card-title">
+                  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </h5>
+                <p class="card-text text-muted">
+                  {{ post.body|markdown|truncatewords_html:12 }}
+                </p>
+                <p class="card-text">
+                  <small class="text-muted">{{ post.get_absolute_url }}</small>
+                </p>
+              </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">
+              <p>There are no results for your query "{{ query }}".</p>
+            </div>
+            {% endfor %}
+          </div>
+          
+          {% if results.has_other_pages %}
+          <!-- Pagination -->
+          <nav aria-label="Search results pagination">
+            <ul class="pagination justify-content-center">
+              {% if results.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?query={{ query }}&page={{ results.previous_page_number }}">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+              </li>
+              {% endif %}
+              
+              {% for i in results.paginator.page_range %}
+              <li class="page-item {% if results.number == i %}active{% endif %}">
+                <a class="page-link" href="?query={{ query }}&page={{ i }}">{{ i }}</a>
+              </li>
+              {% endfor %}
+              
+              {% if results.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?query={{ query }}&page={{ results.next_page_number }}">Next</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+          {% endif %}
+          
+          <p class="text-center mt-4">
+            <a href="{% url 'blog:post_search' %}" class="btn btn-outline-primary">Search again</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% else %}
+  <!-- Show search form when no query -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mx-auto">
+          <div class="card">
+            <div class="card-body text-center">
+              <h3>Search Posts</h3>
+              <form method="get" action="{% url 'blog:post_search' %}" class="mt-4">
+                <div class="input-group">
+                  <input type="text" name="query" class="form-control" placeholder="Search..." value="{{ query }}">
+                  <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% endblock %}
+{% include "blog/includes/footer.html" %}
